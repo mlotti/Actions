@@ -4,6 +4,7 @@ on:
       - opened
       - edited
       - synchronize
+      - ready_for_review
 
 jobs:
   check-pr-title:
