@@ -19,8 +19,7 @@ jobs:
           echo "Pull Request Title: $PR_TITLE"
           LENGTH=${#PR_TITLE}
           if [ $LENGTH -lt 10 ]; then
-            echo "The Pull Request title is too short. It must be at
-least 10 characters long."
+            echo "The Pull Request title is too short. It must be at least 10 characters long."
             exit 1
           fi
           echo "The Pull Request title is valid."
