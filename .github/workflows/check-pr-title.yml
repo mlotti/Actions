@@ -4,25 +4,25 @@ on:
       - opened
       - edited
       - synchronize
+      - ready_for_review
 
 jobs:
   check-pr-title:
+    if: github.event.pull_request.draft == false # Skip the workflow if it's a draft PR
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Check PR title length
+      - name: Check PR title
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
           echo "Pull Request Title: $PR_TITLE"
-          LENGTH=${#PR_TITLE}
-          if [ $LENGTH -lt 10 ]; then
-            echo "The Pull Request title is too short. It must be at
-least 10 characters long."
+          NORMALIZED_TITLE="${PR_TITLE//[[:space:]]/}"
+          if [ -z "$NORMALIZED_TITLE" ]; then
+            echo "The Pull Request title must not be empty or whitespace only."
             exit 1
           fi
           echo "The Pull Request title is valid."
-
 
